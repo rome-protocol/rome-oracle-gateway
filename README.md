@@ -54,3 +54,6 @@ Canonical `OracleAdapterFactory`, `BatchReader`, and per-feed adapter addresses 
 - **[Oracle Gateway guide](https://docs.rome.builders)** — integration walkthrough and the Rome oracle model.
 - **[Contracts (`rome-solidity/contracts/oracle`)](https://github.com/rome-protocol/rome-solidity/tree/master/contracts/oracle)** — the adapters, factory, parsers, and batch reader.
 - **[Rome Solidity SDK](https://github.com/rome-protocol/rome-solidity)** — precompile interfaces and the rest of the on-chain toolkit.
+
+## Building on Rome with an agent
+See [`AGENTS.md`](./AGENTS.md) — the Rome-specific rules a coding agent needs.
