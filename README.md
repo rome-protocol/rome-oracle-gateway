@@ -16,6 +16,29 @@ import {IAggregatorV3Interface} from "@rome-protocol/rome-solidity/contracts/ora
 // price = e.g. SOL/USD at 8 decimals
 ```
 
+## Consume a feed in three steps
+
+**1. Resolve the adapter address** — never hardcode it. Feeds live in the [Rome registry](https://github.com/rome-protocol/rome-registry) at `chains/<id>/oracle.json`:
+
+```ts
+import { getOracle } from "@rome-protocol/registry";
+const solUsd = getOracle(200010).feeds["SOL/USD"].address;
+// Hadrian today: 0x76b92646D63FB1AFEa687C7Dac48b437bF99C1B4
+```
+
+**2. Read it** — the exact interface Ethereum DeFi already uses:
+
+```solidity
+import {IAggregatorV3Interface} from "@rome-protocol/rome-solidity/contracts/oracle/IAggregatorV3Interface.sol";
+
+(, int256 price, , uint256 updatedAt, ) = IAggregatorV3Interface(SOL_USD).latestRoundData();
+// price at 8 decimals — a stale or uninitialized feed REVERTS rather than serving a frozen price
+```
+
+**3. Reading several feeds?** Use the `BatchReader` (Hadrian: `0x306d670dff7f51ae33f263f5122bd2b18d98adc7`) — `getLatestPrices(adapters[])` returns them in one call, and `getFeedHealth(adapters[])` tells you they're live before you depend on them.
+
+That's the whole integration. **[cardo](https://github.com/rome-protocol/cardo)** consumes these feeds in production today (its chain config carries the full Hadrian feed map). Because the surface is exactly `AggregatorV3Interface`, Compound- and Aave-class protocols are **drop-in** — their existing oracle code needs zero changes; point their price-feed configuration at the adapter addresses above.
+
 ## How it works — two read paths
 
 Every adapter exposes `latestRoundData()` (the Chainlink interface) and is deployed as an **EIP-1167 minimal-proxy clone** by the `OracleAdapterFactory`.
