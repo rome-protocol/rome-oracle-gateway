@@ -70,7 +70,7 @@ Each adapter carries an extended metadata surface (`IExtendedOracleAdapter` / `I
 
 ## Addresses & registration
 
-Canonical `OracleAdapterFactory`, `BatchReader`, and per-feed adapter addresses for every public Rome chain (**Martius**, **Hadrian**) live in the [Rome registry](https://github.com/rome-protocol/rome-registry) (`chains/<id>/oracle.json`). To register new feeds or configure a consumer, use the Oracle Gateway Portal.
+Canonical `OracleAdapterFactory`, `BatchReader`, and per-feed adapter addresses for **Hadrian**, Rome's public testnet, live in the [Rome registry](https://github.com/rome-protocol/rome-registry) (`chains/<id>/oracle.json`). To register new feeds or configure a consumer, use the Oracle Gateway Portal.
 
 ## Learn more
 
